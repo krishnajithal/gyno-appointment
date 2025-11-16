@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+{% block title %}Doctor Dashboard{% endblock %}
+{% block content %}
+
+<h2>Welcome Doctor {{ request.user.username }}</h2>
+<p>This is your dashboard where you can manage appointments.</p>
+<a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+
+{% endblock %}

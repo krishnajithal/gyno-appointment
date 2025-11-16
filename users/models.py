@@ -2,8 +2,6 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-from django.db import models
-
 class Profile(models.Model):
 
     ROLE_CHOICES = (
@@ -17,9 +15,9 @@ class Profile(models.Model):
 
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
 
-    phone = models.CharField(max_length=15, blank=True)
+    phone = models.CharField(max_length=15, null=True)
 
-    address = models.TextField(blank=True)
+    address = models.TextField(null=True)
 
     def __str__(self):
         
