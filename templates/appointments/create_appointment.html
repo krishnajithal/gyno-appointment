@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .appointment-card {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(200, 200, 200, 0.3);
+        transition: 0.3s ease-in-out;
+    }
+    .appointment-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .form-control,
+    select,
+    textarea {
+        border-radius: 10px !important;
+        padding: 10px 14px !important;
+        border: 1px solid #c9c9c9 !important;
+        transition: 0.2s ease;
+    }
+
+    .form-control:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #4B8DF8 !important;
+        box-shadow: 0px 0px 0px 4px rgba(75, 141, 248, 0.2);
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #4B8DF8, #6A74F7);
+        border: none;
+        border-radius: 12px;
+        transition: 0.3s ease;
+        box-shadow: 0px 4px 12px rgba(75, 141, 248, 0.4);
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(135deg, #3a79df, #5d66e5);
+        box-shadow: 0px 6px 18px rgba(75, 141, 248, 0.55);
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card appointment-card shadow-lg border-0 rounded-4 p-4">
+
+                <h2 class="fw-bold text-center mb-2">Book an Appointment</h2>
+                <p class="text-muted text-center mb-4">
+                    Choose your doctor and schedule your consultation easily.
+                </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Doctor -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Select Doctor</label>
+                        {{ form.doctor }}
+                    </div>
+
+                    <!-- Date -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Appointment Date</label>
+                        {{ form.date }}
+                    </div>
+
+                    <!-- Time -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Appointment Time</label>
+                        {{ form.time }}
+                    </div>
+
+                    <!-- Reason -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Reason / Symptoms</label>
+                        {{ form.reason }}
+                    </div>
+
+                    <button class="btn btn-primary w-100 py-2 fw-semibold submit-btn">
+                        Book
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

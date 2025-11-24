@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4">Patient Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <a href="{% url 'create_appointment' %}" class="text-decoration-none btn btn-success">
+            <div class="card shadow-sm text-center p-4">
+                <h5>Book Appointment</h5>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="{% url 'patient_appointment_list' %}" class="text-decoration-none btn btn-primary ms-2 ">
+            <div class="card shadow-sm text-center p-4">
+                <h5>Your Appointments</h5>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

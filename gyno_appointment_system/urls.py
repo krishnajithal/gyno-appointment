@@ -9,4 +9,6 @@ urlpatterns = [
     path('',include('core.urls')),
 
     path('users/',include('users.urls')),
+
+    path('appointments/',include('appointments.urls')),
 ]

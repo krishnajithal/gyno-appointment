@@ -15,9 +15,9 @@ class Profile(models.Model):
 
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
 
-    phone = models.CharField(max_length=15, null=True)
+    phone = models.CharField(max_length=15, blank=True)
 
-    address = models.TextField(null=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         

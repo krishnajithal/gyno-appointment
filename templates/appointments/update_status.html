@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <h3 class="fw-bold text-center mb-3">Update Status</h3>
+
+                    <p class="text-center text-muted">
+                        Appointment with <strong>{{ appointment.patient.username }}</strong><br>
+                        <small>{{ appointment.date }} at {{ appointment.time }}</small>
+                    </p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <label class="form-label fw-semibold">Status</label>
+                        <select name="status" class="form-select mb-4">
+                            <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Approved" {% if appointment.status == 'Approved' %}selected{% endif %}>Approved</option>
+                            <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+
+                        <button class="btn btn-primary w-100 py-2 fw-semibold">
+                            Update
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

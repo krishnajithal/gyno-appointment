@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold text-center mb-4">My Appointments</h2>
+
+    {% if appointments %}
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-4">
+                <table class="table align-middle premium-table">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in appointments %}
+                        <tr>
+                            <td class="fw-semibold">{{ app.doctor.username }}</td>
+                            <td>{{ app.date }}</td>
+                            <td>{{ app.time }}</td>
+                            <td>
+                                <span class="status-badge status-{{ app.status|lower }}">
+                                    {{ app.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No appointments yet.</p>
+    {% endif %}
+</div>
+
+<style>
+    .premium-table thead {
+        background: linear-gradient(90deg, #2b7cff, #6aa6ff);
+        color: white;
+    }
+    .premium-table tbody tr:hover {
+        background: #f0f6ff !important;
+        transition: 0.2s;
+    }
+</style>
+{% endblock %}

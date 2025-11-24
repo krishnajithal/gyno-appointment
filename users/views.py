@@ -2,14 +2,13 @@ from django.shortcuts import render,redirect
 
 from django.contrib.auth import authenticate,login,logout
 
-from django.contrib.auth.decorators import login_required
-
 from .forms import UserRegisterForm
 
 from .models import Profile
 
 from django.contrib.auth.models import User
 
+from .decorators import role_required
 # Create your views here.
 
 def register_view(request):
@@ -46,40 +45,50 @@ def login_view(request):
 
         password = request.POST['password']
 
-        user = authenticate(request,usename=username,password=password)
+        user = authenticate(request, username=username, password=password)
 
-        if user is not None :
+        if user is not None:
 
-            login(request,user)
+            login(request, user)
 
-            profile= Profile.objects.get(user=user)
+            profile = Profile.objects.get(user=user)
 
-
-            if profile.role == 'doctor' :
+            if profile.role == 'doctor':
 
                 return redirect('doctor_dashboard')
             
-            else :
+            else:
 
                 return redirect('patient_dashboard')
-            
-        else :
 
-            return render(request,'users/login.html',{'error': 'Invalid credentials'})    
-        
-    return render(request,'users/login.html')
+        return render(request, 'users/login.html', {'error': 'Invalid credentials'})
 
-@login_required
+    return render(request, 'users/login.html')
+
+
+@role_required('doctor')
 
 def doctor_dashboard(request):
 
-    return render(request,'user/doctor_dashboard.html')
+    profile = Profile.objects.get(user=request.user)
 
-@login_required
+    if profile.role != 'doctor':
+          
+        return redirect('home')
+
+    return render(request,'users/doctor_dashboard.html')
+
+@role_required('patient')
 
 def patient_dashboard(request):
 
-    return render(request,'user/patient_dashboard.html')
+    profile = Profile.objects.get(user=request.user)
+
+    if profile.role != 'patient': 
+
+        return redirect('home')
+
+    return render(request,'users/patient_dashboard.html')
 
 def logout_view(request):
 
