@@ -1,0 +1,148 @@
+/* ==========================================
+   GLOBAL PAGE STYLE
+=========================================== */
+
+body {
+    background: #f4f7ff !important;
+    font-family: 'Inter', sans-serif;
+}
+
+.card {
+    border-radius: 16px !important;
+}
+
+/* Glass Card */
+.glass-card {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    transition: 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================
+   FORM ELEMENTS
+=========================================== */
+
+.form-control,
+select,
+textarea {
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    border: 1px solid #c9c9c9 !important;
+    transition: 0.2s ease;
+}
+
+.form-control:focus,
+select:focus,
+textarea:focus {
+    border-color: #4B8DF8 !important;
+    box-shadow: 0px 0px 0px 4px rgba(75, 141, 248, 0.2) !important;
+}
+
+/* Buttons */
+.submit-btn,
+.primary-btn {
+    background: linear-gradient(135deg, #4B8DF8, #6A74F7);
+    border: none !important;
+    border-radius: 12px !important;
+    transition: 0.3s ease !important;
+    box-shadow: 0px 4px 12px rgba(75, 141, 248, 0.4);
+    color: white !important;
+}
+
+.submit-btn:hover,
+.primary-btn:hover {
+    background: linear-gradient(135deg, #3a79df, #5d66e5);
+    box-shadow: 0px 6px 18px rgba(75, 141, 248, 0.55);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   STATUS BADGES
+=========================================== */
+
+.badge-pending {
+    background: #FFBF00 !important;
+    color: #fff !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.badge-approved {
+    background: #1BC47D !important;
+    color: white !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.badge-completed {
+    background: #4B8DF8 !important;
+    color: white !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.badge-cancelled {
+    background: #D9534F !important;
+    color: white !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* ==========================================
+   TABLE STYLING
+=========================================== */
+
+.table thead {
+    background: #4B8DF8;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background: #eef3ff;
+}
+
+.table {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* ==========================================
+   DASHBOARD CARDS
+=========================================== */
+
+.dashboard-card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* ==========================================
+   SPACING UTILITIES
+=========================================== */
+
+.section-title {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.page-header {
+    margin-bottom: 25px;
+}
+

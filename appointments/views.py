@@ -8,6 +8,9 @@ from .forms import AppointmentForm
 
 from users.models import Profile
 
+from django.contrib import messages
+
+
 
 @role_required('patient')
 
@@ -31,13 +34,22 @@ def create_appointment(request):
 
             appointment.save()
 
+            messages.success(request, "Appointment booked successfully!")
+
             return redirect('patient_appointment_list')
         
     else:
 
         form = AppointmentForm()
 
-    return render(request, 'appointments/create_appointment.html', {'form': form})
+    return render(request, 'appointments/create_appointment.html', {
+                                                                    'form': form,
+
+                                                                    'show_dashboard_link': False,
+
+                                                                    'show_logout': True,
+
+                                                                    })
 
 
 @role_required('patient')
@@ -52,7 +64,11 @@ def patient_appointment_list(request):
 
     appointments = Appointment.objects.filter(patient=request.user)
 
-    return render(request, 'appointments/patient_appointment_list.html', {'appointments': appointments})
+    return render(request, 'appointments/patient_appointment_list.html', {'appointments': appointments, 
+                                                                          
+                                                                          'show_dashboard_link': False,
+
+                                                                          'show_logout': True,})
 
 
 @role_required('doctor')
@@ -67,7 +83,12 @@ def doctor_appointment_list(request):
 
     appointments = Appointment.objects.all().order_by('-date', '-time')
 
-    return render(request, 'appointments/doctor_appointment_list.html', {'appointments': appointments})
+    return render(request, 'appointments/doctor_appointment_list.html', {
+                                                                        'appointments': appointments, 
+
+                                                                        'show_dashboard_link': False,
+
+                                                                        'show_logout': True,})
 
 
 @role_required('doctor')
@@ -84,12 +105,50 @@ def update_appointment_status(request, pk):
 
     if request.method == "POST":
 
-        new_status = request.POST['status']
+        new_status = request.POST.get('status')
 
-        appointment.status = new_status
+        if new_status:
 
-        appointment.save()
+            appointment.status = new_status
 
-        return redirect('doctor_appointment_list')
+            appointment.save()
 
-    return render(request, 'appointments/update_status.html', {'appointment': appointment})
+            messages.success(request, "Appointment status updated successfully!")
+
+            return redirect('doctor_appointment_list')
+
+        else:
+            return render(request, 'appointments/update_status.html', {
+                                                                        'appointment': appointment,
+
+                                                                        'error': 'Please select a status.'
+                                                                        })
+
+    return render(request, 'appointments/update_status.html', {
+                                                                'appointment': appointment, 
+
+                                                                'show_dashboard_link': False,
+
+                                                                'show_logout': True,
+
+                                                                })
+
+@role_required('patient')
+def cancel_appointment(request, pk):
+
+    profile = Profile.objects.get(user=request.user)
+
+    if profile.role != "patient":
+
+        return redirect("home")
+
+    appointment = get_object_or_404(Appointment, id=pk, patient=request.user)
+
+    appointment.status = "Cancelled"
+
+    appointment.save()
+
+    messages.success(request, "Appointment cancelled successfully!")
+
+    return redirect('patient_appointment_list')
+

@@ -2,43 +2,61 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-    
-    <div class="row justify-content-center">
-        <div class="col-md-6">
 
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-body p-4">
+<h2 class="section-title mb-4">Update Appointment Status</h2>
 
-                    <h3 class="fw-bold text-center mb-3">Update Status</h3>
+<div class="card glass-card p-4 col-md-8 mx-auto">
 
-                    <p class="text-center text-muted">
-                        Appointment with <strong>{{ appointment.patient.username }}</strong><br>
-                        <small>{{ appointment.date }} at {{ appointment.time }}</small>
-                    </p>
+    <h4 class="fw-bold mb-3">Appointment Details</h4>
 
-                    <form method="POST">
-                        {% csrf_token %}
+    <p><strong>Patient:</strong> {{ appointment.patient.username }}</p>
+    <p><strong>Date:</strong> {{ appointment.date }}</p>
+    <p><strong>Time:</strong> {{ appointment.time }}</p>
+    <p><strong>Reason:</strong> {{ appointment.reason }}</p>
 
-                        <label class="form-label fw-semibold">Status</label>
-                        <select name="status" class="form-select mb-4">
-                            <option value="Pending" {% if appointment.status == 'Pending' %}selected{% endif %}>Pending</option>
-                            <option value="Approved" {% if appointment.status == 'Approved' %}selected{% endif %}>Approved</option>
-                            <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
-                            <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
-                        </select>
+    <p>
+        <strong>Current Status:</strong> 
+        {% if appointment.status == "Pending" %}
+            <span class="badge-pending">Pending</span>
+        {% elif appointment.status == "Approved" %}
+            <span class="badge-approved">Approved</span>
+        {% elif appointment.status == "Completed" %}
+            <span class="badge-completed">Completed</span>
+        {% else %}
+            <span class="badge-cancelled">Cancelled</span>
+        {% endif %}
+    </p>
 
-                        <button class="btn btn-primary w-100 py-2 fw-semibold">
-                            Update
-                        </button>
+    <hr>
 
-                    </form>
+    <h5 class="fw-bold mt-3 mb-2">Change Status</h5>
 
-                </div>
-            </div>
+    <form method="POST">
+        {% csrf_token %}
 
-        </div>
-    </div>
+        <select class="form-select mb-3" name="status" required>
+            <option value="">-- Select Status --</option>
+
+            <option value="Pending" {% if appointment.status == "Pending" %}selected{% endif %}>
+                Pending
+            </option>
+
+            <option value="Approved" {% if appointment.status == "Approved" %}selected{% endif %}>
+                Approved
+            </option>
+
+            <option value="Completed" {% if appointment.status == "Completed" %}selected{% endif %}>
+                Completed
+            </option>
+
+            <option value="Cancelled" {% if appointment.status == "Cancelled" %}selected{% endif %}>
+                Cancelled
+            </option>
+        </select>
+
+        <button class="btn btn-primary w-100 py-2 fw-semibold submit-btn">Update Status</button>
+    </form>
 
 </div>
+
 {% endblock %}

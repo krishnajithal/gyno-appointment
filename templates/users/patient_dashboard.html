@@ -1,24 +1,99 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
 
-<h2 class="mb-4">Patient Dashboard</h2>
+<h2 class="section-title mb-4">Patient Dashboard</h2>
 
-<div class="row">
+<div class="row g-4 mb-4">
+
     <div class="col-md-4">
-        <a href="{% url 'create_appointment' %}" class="text-decoration-none btn btn-success">
-            <div class="card shadow-sm text-center p-4">
-                <h5>Book Appointment</h5>
-            </div>
-        </a>
+        <div class="dashboard-card text-center">
+            <h5 class="fw-bold mb-1">Total Appointments</h5>
+            <p class="fs-3 fw-bold text-primary mb-0">{{ total_appointments }}</p>
+        </div>
     </div>
 
     <div class="col-md-4">
-        <a href="{% url 'patient_appointment_list' %}" class="text-decoration-none btn btn-primary ms-2 ">
-            <div class="card shadow-sm text-center p-4">
-                <h5>Your Appointments</h5>
-            </div>
-        </a>
+        <div class="dashboard-card text-center">
+            <h5 class="fw-bold mb-1">Upcoming</h5>
+            <p class="fs-3 fw-bold text-info mb-0">{{ upcoming_count }}</p>
+        </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="dashboard-card text-center">
+            <h5 class="fw-bold mb-1">Completed</h5>
+            <p class="fs-3 fw-bold text-success mb-0">{{ completed_count }}</p>
+        </div>
+    </div>
+
 </div>
+
+
+<div class="card glass-card p-4">
+
+    <h4 class="fw-bold mb-3">Today's Appointments</h4>
+
+    {% if todays_appointments %}
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for appt in todays_appointments %}
+                <tr>
+                    <td>{{ appt.doctor.username }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>{{ appt.time }}</td>
+                    <td>
+                        {% if appt.status == "Pending" %}
+                            <span class="badge-pending">Pending</span>
+                        {% elif appt.status == "Approved" %}
+                            <span class="badge-approved">Approved</span>
+                        {% elif appt.status == "Completed" %}
+                            <span class="badge-completed">Completed</span>
+                        {% else %}
+                            <span class="badge-cancelled">Cancelled</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+        <p class="text-muted">No appointments found for today.</p>
+    {% endif %}
+
+</div>
+
+<div class="col-md-12 mt-4 px-0">
+    <a href="{% url 'create_appointment' %}" class="text-decoration-none">
+        <div class="dashboard-card text-center py-4">
+            <h4 class="fw-bold mb-1 text-primary">Book New Appointment</h4>
+            <p class="text-muted mb-0">Schedule a consultation with a doctor</p>
+        </div>
+    </a>
+</div>
+
+<div class="col-md-12 mt-3 px-0">
+    <a href="{% url 'patient_appointment_list' %}" class="text-decoration-none">
+        <div class="dashboard-card text-center py-4">
+            <h4 class="fw-bold mb-1 text-primary">View My Appointments</h4>
+            <p class="text-muted mb-0">Check all your past, upcoming & completed appointments</p>
+        </div>
+    </a>
+</div>
+
 
 {% endblock %}

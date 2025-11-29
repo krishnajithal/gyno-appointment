@@ -2,51 +2,69 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-    <h2 class="fw-bold text-center mb-4">My Appointments</h2>
+
+<h2 class="section-title mb-4">My Appointments</h2>
+
+<div class="card glass-card p-4">
 
     {% if appointments %}
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-body p-4">
-                <table class="table align-middle premium-table">
-                    <thead>
-                        <tr>
-                            <th>Doctor</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for app in appointments %}
-                        <tr>
-                            <td class="fw-semibold">{{ app.doctor.username }}</td>
-                            <td>{{ app.date }}</td>
-                            <td>{{ app.time }}</td>
-                            <td>
-                                <span class="status-badge status-{{ app.status|lower }}">
-                                    {{ app.status }}
-                                </span>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+
+                    <td class="fw-semibold">{{ appt.doctor.username }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>{{ appt.time }}</td>
+
+                    <td>
+                        {% if appt.status == "Pending" %}
+                            <span class="badge-pending">Pending</span>
+                        {% elif appt.status == "Approved" %}
+                            <span class="badge-approved">Approved</span>
+                        {% elif appt.status == "Completed" %}
+                            <span class="badge-completed">Completed</span>
+                        {% else %}
+                            <span class="badge-cancelled">Cancelled</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if appt.status == "Pending" or appt.status == "Approved" %}
+                            <a href="{% url 'cancel_appointment' appt.id %}"
+                               class="btn btn-sm btn-danger px-3"
+                               onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                               Cancel
+                            </a>
+                        {% else %}
+                            <span class="text-muted">--</span>
+                        {% endif %}
+                    </td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
     {% else %}
-        <p class="text-center text-muted">No appointments yet.</p>
+        <p class="text-muted">You have no appointments.</p>
     {% endif %}
+
 </div>
 
-<style>
-    .premium-table thead {
-        background: linear-gradient(90deg, #2b7cff, #6aa6ff);
-        color: white;
-    }
-    .premium-table tbody tr:hover {
-        background: #f0f6ff !important;
-        transition: 0.2s;
-    }
-</style>
 {% endblock %}

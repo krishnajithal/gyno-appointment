@@ -1,98 +1,53 @@
 {% extends 'base.html' %}
-{% load static %}
+{% block title %}Book Appointment{% endblock %}
 
 {% block content %}
+<div class="row justify-content-center py-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card glass-card p-4">
 
-<style>
-    .appointment-card {
-        backdrop-filter: blur(12px);
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid rgba(200, 200, 200, 0.3);
-        transition: 0.3s ease-in-out;
-    }
-    .appointment-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.12);
-    }
+      <h3 class="fw-bold mb-2">Book an Appointment</h3>
+      <p class="text-muted mb-3">Choose your doctor and schedule a time.</p>
 
-    .form-control,
-    select,
-    textarea {
-        border-radius: 10px !important;
-        padding: 10px 14px !important;
-        border: 1px solid #c9c9c9 !important;
-        transition: 0.2s ease;
-    }
+      <form method="POST" novalidate>
+        {% csrf_token %}
 
-    .form-control:focus,
-    select:focus,
-    textarea:focus {
-        border-color: #4B8DF8 !important;
-        box-shadow: 0px 0px 0px 4px rgba(75, 141, 248, 0.2);
-    }
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger mb-3">
+            {% for err in form.non_field_errors %}
+              <div>{{ err }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
 
-    .submit-btn {
-        background: linear-gradient(135deg, #4B8DF8, #6A74F7);
-        border: none;
-        border-radius: 12px;
-        transition: 0.3s ease;
-        box-shadow: 0px 4px 12px rgba(75, 141, 248, 0.4);
-    }
-
-    .submit-btn:hover {
-        background: linear-gradient(135deg, #3a79df, #5d66e5);
-        box-shadow: 0px 6px 18px rgba(75, 141, 248, 0.55);
-        transform: translateY(-2px);
-    }
-</style>
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-
-            <div class="card appointment-card shadow-lg border-0 rounded-4 p-4">
-
-                <h2 class="fw-bold text-center mb-2">Book an Appointment</h2>
-                <p class="text-muted text-center mb-4">
-                    Choose your doctor and schedule your consultation easily.
-                </p>
-
-                <form method="POST">
-                    {% csrf_token %}
-
-                    <!-- Doctor -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Select Doctor</label>
-                        {{ form.doctor }}
-                    </div>
-
-                    <!-- Date -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Appointment Date</label>
-                        {{ form.date }}
-                    </div>
-
-                    <!-- Time -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Appointment Time</label>
-                        {{ form.time }}
-                    </div>
-
-                    <!-- Reason -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Reason / Symptoms</label>
-                        {{ form.reason }}
-                    </div>
-
-                    <button class="btn btn-primary w-100 py-2 fw-semibold submit-btn">
-                        Book
-                    </button>
-
-                </form>
-
-            </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Doctor</label>
+          {{ form.doctor }}
+          {% if form.doctor.errors %}<small class="text-danger">{{ form.doctor.errors.0 }}</small>{% endif %}
         </div>
-    </div>
-</div>
 
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Date</label>
+          {{ form.date }}
+          {% if form.date.errors %}<small class="text-danger">{{ form.date.errors.0 }}</small>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Time</label>
+          {{ form.time }}
+          {% if form.time.errors %}<small class="text-danger">{{ form.time.errors.0 }}</small>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Reason / Symptoms</label>
+          {{ form.reason }}
+          {% if form.reason.errors %}<small class="text-danger">{{ form.reason.errors.0 }}</small>{% endif %}
+        </div>
+
+        <button class="btn submit-btn w-100" type="submit">Book Appointment</button>
+      </form>
+
+    </div>
+  </div>
+</div>
 {% endblock %}
