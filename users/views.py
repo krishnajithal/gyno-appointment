@@ -15,6 +15,16 @@ from .decorators import role_required
 # -----------------------------
 def register_view(request):
 
+    if request.user.is_authenticated:
+
+        profile = Profile.objects.get(user=request.user)
+
+        if profile.role == 'doctor':
+
+            return redirect('doctor_dashboard')
+        
+        return redirect('patient_dashboard')
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
 
@@ -36,7 +46,10 @@ def register_view(request):
 
     return render(request, 'users/register.html', {
         'form': form,
-        'hide_nav_links': True
+
+        'hide_nav_links': True,
+
+        'show_dashboard_links': False,
     })
 
 
@@ -44,6 +57,16 @@ def register_view(request):
 # LOGIN VIEW (IMPROVED ERRORS)
 # -----------------------------
 def login_view(request):
+
+    if request.user.is_authenticated:
+
+        profile = Profile.objects.get(user=request.user)
+
+        if profile.role == 'doctor':
+
+            return redirect('doctor_dashboard')
+        
+        return redirect('patient_dashboard')
 
     error_message = None
 
@@ -75,7 +98,7 @@ def login_view(request):
             messages.success(request, "Login successful! Welcome Patient.")
             return redirect('patient_dashboard')
         
-    return render(request, 'users/login.html')
+    return render(request, 'users/login.html',{'show_dashboard_links': False,})
 
 
 # -----------------------------
@@ -91,14 +114,14 @@ def doctor_dashboard(request):
 
     context = {
         'total_appointments': appointments.count(),
-        'today_count': appointments.filter(date=today).count(),
+        'today_count': appointments.filter(date=today).exclude(status__in=['Completed', 'Cancelled']).count(),
         'completed_count': appointments.filter(status='Completed').count(),
 
-        'upcoming_appointments': appointments.filter(date__gt=today).order_by('date', 'time'),
+        'upcoming_appointments': appointments.filter(date__gt=today).exclude(status__in=['Completed', 'Cancelled']).order_by('date', 'time'),
 
         # NAVBAR FLAGS
         'hide_nav_links': False,
-        'show_dashboard_link': False,
+        'show_dashboard_links': False,
         'show_logout': True,
         'show_auth_links': False,
     }
@@ -126,7 +149,7 @@ def patient_dashboard(request):
 
         # NAVBAR FLAGS
         'hide_nav_links': False,
-        'show_dashboard_link': False,
+        'show_dashboard_links': False,
         'show_logout': True,
         'show_auth_links': False,
     }

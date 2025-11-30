@@ -54,38 +54,28 @@
 
                         {% if user.is_authenticated %}
 
-                            {% if show_dashboard_link|default:True %}
+                            {% if show_dashboard_links %}
                                 {% if user.profile.role == "doctor" %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'doctor_dashboard' %}">
-                                        <i class="fa-solid fa-user-doctor me-1"></i> Doctor Dashboard
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'doctor_dashboard' %}">Doctor Dashboard</a>
+                                    </li>
                                 {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'patient_dashboard' %}">
-                                        <i class="fa-solid fa-hospital-user me-1"></i> Patient Dashboard
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'patient_dashboard' %}">Patient Dashboard</a>
+                                    </li>
                                 {% endif %}
                             {% endif %}
 
-                            {% if show_logout|default:True %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">
-                                    <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
-                                </a>
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                             </li>
-                            {% endif %}
 
                         {% else %}
-                            {% if show_auth_links|default:True %}
+
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">
-                                    <i class="fa-solid fa-right-to-bracket me-1"></i> Login
-                                </a>
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
                             </li>
-                            {% endif %}
+
                         {% endif %}
 
                     {% endif %}

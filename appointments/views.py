@@ -45,7 +45,7 @@ def create_appointment(request):
     return render(request, 'appointments/create_appointment.html', {
                                                                     'form': form,
 
-                                                                    'show_dashboard_link': False,
+                                                                    'show_dashboard_links': True,
 
                                                                     'show_logout': True,
 
@@ -66,7 +66,7 @@ def patient_appointment_list(request):
 
     return render(request, 'appointments/patient_appointment_list.html', {'appointments': appointments, 
                                                                           
-                                                                          'show_dashboard_link': False,
+                                                                          'show_dashboard_links': True,
 
                                                                           'show_logout': True,})
 
@@ -86,7 +86,7 @@ def doctor_appointment_list(request):
     return render(request, 'appointments/doctor_appointment_list.html', {
                                                                         'appointments': appointments, 
 
-                                                                        'show_dashboard_link': False,
+                                                                        'show_dashboard_links': True,
 
                                                                         'show_logout': True,})
 
@@ -121,7 +121,10 @@ def update_appointment_status(request, pk):
             return render(request, 'appointments/update_status.html', {
                                                                         'appointment': appointment,
 
-                                                                        'error': 'Please select a status.'
+                                                                        'error': 'Please select a status.',
+
+                                                                        'show_dashboard_links': True,
+
                                                                         })
 
     return render(request, 'appointments/update_status.html', {
@@ -150,5 +153,5 @@ def cancel_appointment(request, pk):
 
     messages.success(request, "Appointment cancelled successfully!")
 
-    return redirect('patient_appointment_list')
+    return redirect('patient_appointment_list',{'show_dashboard_links': True,})
 
