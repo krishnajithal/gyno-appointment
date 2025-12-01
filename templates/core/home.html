@@ -1,46 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="text-center mb-5">
-    <h1 class="fw-bold text-primary mb-3">
-        Welcome to <span class="text-dark">GynoCare</span>
-    </h1>
-    <p class="text-muted fs-5">
-        Your trusted platform for managing gynecology appointments with ease.
-    </p>
-</div>
+<!-- HERO SECTION -->
+<div class="row align-items-center justify-content-center py-5">
+    <div class="col-md-6 text-center text-md-start">
 
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center py-4">
-                <i class="fa-solid fa-user-doctor text-primary fa-3x mb-3"></i>
-                <h4 class="fw-bold mb-3">Doctor Login</h4>
-                <a href="{% url 'login' %}" class="btn btn-primary btn-lg w-100 premium-btn">
-                    Login as Doctor
-                </a>
-            </div>
+        <h1 class="fw-bold display-5 mb-3 text-primary">
+            Welcome to <span class="text-dark">GynoCare</span>
+        </h1>
+
+        <p class="lead text-muted mb-4">
+            A modern and easy-to-use appointment system designed to simplify your medical visit scheduling.
+        </p>
+
+        <div class="mt-4">
+            <a href="{% url 'login' %}" class="btn submit-btn px-4 py-2 me-2">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="btn btn-outline-primary px-4 py-2 fw-semibold"
+               style="border-radius: 12px;">
+                Register
+            </a>
         </div>
+
     </div>
 
-    <div class="col-md-4 mt-4 mt-md-0">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center py-4">
-                <i class="fa-solid fa-hospital-user text-success fa-3x mb-3"></i>
-                <h4 class="fw-bold mb-3">Patient Login</h4>
-                <a href="{% url 'login' %}" class="btn btn-success btn-lg w-100 premium-btn">
-                    Login as Patient
-                </a>
-            </div>
-        </div>
+    <div class="col-md-5 mt-4 mt-md-0 text-center">
+        <img src="{% static 'images/Gynocare-logo.webp' %}" alt="Doctor illustration"
+             class="img-fluid" style="max-width: 50%;">
     </div>
 </div>
 
-<div class="text-center mt-5">
-    <p class="text-muted">
-        New here?  
-        <a href="{% url 'register' %}" class="fw-bold">Create an account</a>
-    </p>
-</div>
 {% endblock %}

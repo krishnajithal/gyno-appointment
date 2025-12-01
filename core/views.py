@@ -17,5 +17,9 @@ def home(request):
 
             return redirect('patient_dashboard')
 
-    return render(request, 'core/home.html')
+    return render(request, 'core/home.html',{
+                                            'hide_nav_links':True, 
+                                            'show_dashboard_links':False,
+                                            'title': 'Home Page – GynoCare', 
+                                            })
 

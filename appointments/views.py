@@ -49,6 +49,8 @@ def create_appointment(request):
 
                                                                     'show_logout': True,
 
+                                                                    'title': 'Appointent Booking Page – GynoCare',
+
                                                                     })
 
 
@@ -68,7 +70,10 @@ def patient_appointment_list(request):
                                                                           
                                                                           'show_dashboard_links': True,
 
-                                                                          'show_logout': True,})
+                                                                          'show_logout': True,
+
+                                                                          'title': 'My Appointents – GynoCare',
+                                                                          })
 
 
 @role_required('doctor')
@@ -88,7 +93,10 @@ def doctor_appointment_list(request):
 
                                                                         'show_dashboard_links': True,
 
-                                                                        'show_logout': True,})
+                                                                        'show_logout': True,
+
+                                                                        'title': 'All Appointents – GynoCare',
+                                                                        })
 
 
 @role_required('doctor')
@@ -134,6 +142,8 @@ def update_appointment_status(request, pk):
 
                                                                 'show_logout': True,
 
+                                                                'title': 'Status Update Page – GynoCare',
+
                                                                 })
 
 @role_required('patient')
@@ -153,5 +163,9 @@ def cancel_appointment(request, pk):
 
     messages.success(request, "Appointment cancelled successfully!")
 
-    return redirect('patient_appointment_list',{'show_dashboard_links': True,})
+    return redirect('patient_appointment_list',{
+                                                'show_dashboard_links': True, 
+
+                                                'title': 'Cancel Appointment Page – GynoCare', 
+                                                })
 

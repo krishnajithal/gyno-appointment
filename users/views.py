@@ -10,9 +10,9 @@ from appointments.models import Appointment
 from .decorators import role_required
 
 
-# -----------------------------
+# --------------
 # REGISTER VIEW
-# -----------------------------
+# --------------
 def register_view(request):
 
     if request.user.is_authenticated:
@@ -50,12 +50,15 @@ def register_view(request):
         'hide_nav_links': True,
 
         'show_dashboard_links': False,
+
+        'title': 'Registration page – GynoCare',
+
     })
 
 
-# -----------------------------
-# LOGIN VIEW (IMPROVED ERRORS)
-# -----------------------------
+# -----------
+# LOGIN VIEW 
+# -----------
 def login_view(request):
 
     if request.user.is_authenticated:
@@ -98,12 +101,16 @@ def login_view(request):
             messages.success(request, "Login successful! Welcome Patient.")
             return redirect('patient_dashboard')
         
-    return render(request, 'users/login.html',{'show_dashboard_links': False,})
+    return render(request, 'users/login.html',{
+                                                'show_dashboard_links': False, 
+
+                                                'title': 'Login Page – GynoCare',
+                                                })
 
 
-# -----------------------------
+# -----------------
 # DOCTOR DASHBOARD
-# -----------------------------
+# -----------------
 @role_required('doctor')
 def doctor_dashboard(request):
 
@@ -123,15 +130,16 @@ def doctor_dashboard(request):
         'hide_nav_links': False,
         'show_dashboard_links': False,
         'show_logout': True,
-        'show_auth_links': False,
+        'show_auth_links': False, 
+        'title': 'Doctor Dashboard – GynoCare',
     }
 
     return render(request, 'users/doctor_dashboard.html', context)
 
 
-# -----------------------------
+# ------------------
 # PATIENT DASHBOARD
-# -----------------------------
+# ------------------
 @role_required('patient')
 def patient_dashboard(request):
 
@@ -152,14 +160,15 @@ def patient_dashboard(request):
         'show_dashboard_links': False,
         'show_logout': True,
         'show_auth_links': False,
+        'title': 'Patient Dashboard – GynoCare',
     }
 
     return render(request, 'users/patient_dashboard.html', context)
 
 
-# -----------------------------
+# ------------
 # LOGOUT VIEW
-# -----------------------------
+# ------------
 def logout_view(request):
 
     logout(request)
